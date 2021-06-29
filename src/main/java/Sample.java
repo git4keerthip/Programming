@@ -2,19 +2,24 @@
 
 import java.util.*;
 
-public  class Sample {
+public abstract  class Sample {
 
-Queue<Integer> q = new PriorityQueue<>();
+    public Sample(){
 
-
-    public static void main(String[] args){
-
+    }
+    public static void main(String[] args)  {
+        
        // printTraingleStars(3);
         //System.out.println(" palindrome "+recursionPalindrom("b".toCharArray(),0));
         //maxAndMinOfArray(new int[]{9,9 , 8 , -0 , -9});
 //        Integer minsum = Kadane2(new int[] {2,6,8,1,4,0});
 
-        permutationsString("ABCB","");
+      //  permutationsString("ABCB","");
+
+        //stockPairs(Arrays.asList(1,3,46,1,3,9),47);
+        //leetcode2Sum(new int[] {1,3,46,1,3,9} , 47);
+      //  leetcodeReverseInt(123);
+      //revisit // merge two sorted list
 
     }
 
@@ -89,7 +94,7 @@ Queue<Integer> q = new PriorityQueue<>();
         }
         return globalMin;
     }
-   public static void permutationsString(String input , String ans){
+    public static void permutationsString(String input , String ans){
         if(input.length()==0) {
             System.out.println(ans);return;
         }
@@ -99,4 +104,67 @@ Queue<Integer> q = new PriorityQueue<>();
             permutationsString(subString,ans+input.charAt(i));
         }
    }
+    public static int stockPairs(List<Integer> stocksProfit, long target) {
+        // Write your code here
+        int countStocks=0;
+        Set<String> st = new HashSet<>();
+        for(int i= 0 ;i<stocksProfit.size()-1;i++){
+            for(int j=i+1;j<stocksProfit.size();j++){
+
+                if(stocksProfit.get(i)+stocksProfit.get(j)==target){
+
+                    String temp;
+                    if(stocksProfit.get(i)<stocksProfit.get(j))
+                        temp= stocksProfit.get(i)+"_"+stocksProfit.get(j);
+                    else
+                        temp = stocksProfit.get(j)+"_"+stocksProfit.get(i);
+                    if(st.add(temp))
+                        countStocks++;
+
+                }
+            }
+        }
+        return countStocks;
+    }
+    public static int[] leetcode2Sum(int[] a, int target){
+        if(a.length ==2 )
+        {
+            if(a[0]+a[1]==target)
+                return new int[]{0,1};
+        }
+        Map<Integer,Integer> hm = new HashMap<>();
+        for(int i =0; i<a.length;i++){
+            hm.put(a[i],i);
+        }
+        for(int i =0; i<a.length;i++){
+           int temp = target -a[i];
+           if(hm.containsKey(temp)&&hm.get(temp)!=i){
+               return new int[]{i,hm.get(temp)};
+           }
+        }
+        return new int[]{};
+    }
+    public static int leetcodeReverseInt(int x){
+        if(x>=-9 && x <=9)
+            return x;
+        if(x<=Integer.MIN_VALUE && x>=Integer.MAX_VALUE) return 0;
+        String str ="";
+        int y  = Math.abs(x);
+        while(y!=0) {
+            int mod =y % 10;
+            str = str + mod;
+            y = y / 10;
+        }
+        try {
+            y = Integer.valueOf(str);
+        }
+        catch (NumberFormatException e)
+        {
+            return 0;
+        }
+        if(x<0)
+            return -y;
+        else return y;
+    }
 }
+
