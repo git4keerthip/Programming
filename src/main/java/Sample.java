@@ -8,7 +8,7 @@ public abstract  class Sample {
 
     }
     public static void main(String[] args)  {
-        
+        trailingZeroes(5);
        // printTraingleStars(3);
         //System.out.println(" palindrome "+recursionPalindrom("b".toCharArray(),0));
         //maxAndMinOfArray(new int[]{9,9 , 8 , -0 , -9});
@@ -22,7 +22,28 @@ public abstract  class Sample {
       //revisit // merge two sorted list
 
     }
+    static int trailingZeroes(int N){
+        // Write your code here
+        if(N<5) return 0;
+        HashMap<Integer,Integer> hm = new HashMap<Integer,Integer>();
+        int temp = fact(N,hm);
+        int count =0; int rem =0;
+        while(rem==0){
+            rem = temp%10;
+            temp = temp/10;
+           if(rem==0) count++;
+        }
+        return count;
 
+    }
+    static int fact(int N,HashMap <Integer,Integer> hm){
+        if(hm.containsKey(N))
+            return hm.get(N);
+        if(N ==1 || N ==0) return 1;
+        int temp = N*fact(N-1,hm);
+        hm.put(N,temp);
+        return hm.get(N);
+    }
     public static void printTraingleStars(int n){
         int mid = n-1;
         for (int i = 0; i < n; i++) {
